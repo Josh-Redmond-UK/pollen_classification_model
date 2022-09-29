@@ -9,7 +9,7 @@ with open("requirements.txt") as f:
             requirements.append(stripped)
 
 setup(
-    name="pollen_classification_model",
+    name="Pollen-Grain-DL",
     version="0.0.1",
     description="scivision plugin, using EfficientNetB3 model",
     ### TODO ###
