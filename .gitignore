@@ -128,3 +128,4 @@ dmypy.json
 # Pyre type checker
 .pyre/
 pollen_classification_model/modelWeights.h5
+pollen_classification_model/PollenGrainImages/arrabidaea_21.jpg
