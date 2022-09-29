@@ -6,6 +6,8 @@ import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras.models import Model
 # prevent annoying tensorflow warning
+import shutil
+
 
 import logging
 logging.getLogger("tensorflow").setLevel(logging.ERROR)
@@ -15,7 +17,11 @@ warnings.simplefilter("ignore")
 CLASS_LABELS = ['anadenanthera', 'arecaceae', 'arrabidaea', 'cecropia', 'chromolaena', 'combretum', 'croton', 'dipteryx', 'eucalipto', 'faramea', 'hyptis', 'mabea', 'matayba', 'mimosa', 'myrcia', 'protium', 'qualea', 'schinus', 'senegalia', 'serjania', 'syagrus', 'tridax', 'urochloa']
 
 def load_model_with_weights(url):
+    weights_filename = "modelWeights.h5"
     ### TODO ####
+    with requests.get(url, stream=True) as r:
+        with open(weights_filename, "wb") as w:
+            shutil.copyfileobj(r.raw, w)
     ### Need to download the weights file from url, if it's not already
     ### present, and put the downloaded filename into a variable
     ### called weights_filename
@@ -43,12 +49,18 @@ def preprocess_image(image):
 
 
 class efficientNetB3:
+    def __init__(self, url):
+        self.model = load_model_with_weights(url)
     ### TODO ####
     ### Add a constructor to this class that calls the function
     ### to download the model weights, load the model, and assign
     ### to self.model
 
     def predict(self, image: np.ndarray):
+        if  image.shape != (3, 224, 224):
+            image = preprocess_image(image)
+        
+
         ### TODO - make sure the image is the correct size, and has
         ### the dimensions expected by the model.
 
@@ -56,7 +68,11 @@ class efficientNetB3:
         ### TODO ####
         ### Find the highest weight, and, using the list of CLASS_LABELS
         ### get the corresponding class name.
-        return "FIXME"
+        
+        
+
+        return  CLASS_LABELS[int(np.argmax(result, axis=1))]
+
 
 
 
