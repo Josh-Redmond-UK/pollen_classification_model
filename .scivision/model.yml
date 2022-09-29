@@ -1,4 +1,4 @@
-name: Pollen-Grain-DL
+name: "Pollen-Grain-DL"
 url: https://github.com/nbarlowATI/pollen_classification_model
 import: pollen_classification_model
 model: efficientNetB3
